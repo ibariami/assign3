@@ -1,3 +1,5 @@
 Cloned the assign3 repository. Encountered an issue with ./helper wsl not working, but 
 realized I was in the wrong direcatory. I went to assign3 directory and successfully ran sudo
 ./helper wsl and ./helper init to set up the local environment and install dependencies.
+
+Replaced the starter code in App.jsx with the starting Square component from the React tutorial.
