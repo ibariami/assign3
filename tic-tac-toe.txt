@@ -8,3 +8,6 @@ Converted the Square function to a Board function with 3x3 squares each labelled
 
 Introduced the square function again, this time with the functionality of clicking resulting in
 an 'X' appearing in the box. Also removed the 1-9 numbering so the grid starts empty.
+
+Square now takes on value from Board and the 3x3 display remain empty even when clicked.
+
