@@ -32,9 +32,26 @@ export default function Board() {
 
     //phase detection: if player has 3 pieces they are in the movement phase
     if (pieceCount >= 3) {
-      // need to implement movement**********************
-      if (squares[i] === currentPlayer) {
-        setSelected(i);
+      //if no piece is selected select the clicked piece if it belongs to the current player
+      if (selected === null) {
+        if (squares[i] === currentPlayer) {
+          setSelected(i);
+        }
+      } else {
+        //second click: if destination is occupied clear selection to revert the invalid move
+        if (squares[i]) {
+          setSelected(null);
+          return;
+        }
+        
+        //second click: if destination is empty move the piece
+        const nextSquares = squares.slice();
+        nextSquares[selected] = null; //clear old square
+        nextSquares[i] = currentPlayer; //fill new square
+        
+        setSquares(nextSquares);
+        setXIsNext(!xIsNext);
+        setSelected(null); //reset selection for the next player
       }
       return; 
     }
