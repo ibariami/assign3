@@ -44,11 +44,23 @@ export default function Board() {
           return;
         }
         
-        //second click: if destination is empty and adjacent move the piece
+        //simulate the move to test for center square rules
         const nextSquares = squares.slice();
         nextSquares[selected] = null; //clear old square
         nextSquares[i] = currentPlayer; //fill new square
         
+        //center square rule: if you are in the center you must vacate or win
+        if (squares[4] === currentPlayer) {
+          const isVacatingCenter = selected === 4;
+          const isWinningMove = calculateWinner(nextSquares) === currentPlayer;
+          
+          if (!isVacatingCenter && !isWinningMove) {
+            setSelected(null); //invalid move, drop selection
+            return;
+          }
+        }
+        
+        //move is valid, apply it
         setSquares(nextSquares);
         setXIsNext(!xIsNext);
         setSelected(null); //reset selection for the next player

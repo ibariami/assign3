@@ -11,3 +11,8 @@ move requirement.
 Addded isAdjacent helper that converts 1d array indices into 2d grid coordinates to check if a 
 destination is exactly one square away. updated the second-click movement logic to clear the 
 selection if the player clicks an invalid non-adjacent square.
+
+Fulfill center square rule for the movement phase. Added check for if the current player occupies
+the center tile. If so, simulates the intended move to ensure it either vacates the center or 
+results in an immediate win. if neither condition is met, the selection is cleared as an invalid
+move.
