@@ -18,3 +18,7 @@ functions to pass arguments to the event handler without triggering an infinite 
 Added xIsNext state boolean to the Board component to track whose turn it is and alternate 
 between 'X' and 'O'. Updated the handleClick function to return early if a square already 
 contains a value, preventing players from overwriting existing moves.
+
+Added a calculateWinner helper function to evaluate all possible winning lines on the board. 
+Updated the handleClick function to prevent further moves if a winner is found and added a 
+status element to the UI to display either the next player turn or final winner.
