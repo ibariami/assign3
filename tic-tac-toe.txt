@@ -5,3 +5,6 @@ realized I was in the wrong direcatory. I went to assign3 directory and successf
 Replaced the starter code in App.jsx with the starting Square component from the React tutorial.
 
 Converted the Square function to a Board function with 3x3 squares each labelled 1-9.
+
+Introduced the square function again, this time with the functionality of clicking resulting in
+an 'X' appearing in the box. Also removed the 1-9 numbering so the grid starts empty.
