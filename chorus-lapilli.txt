@@ -7,3 +7,7 @@ Added the two click movement mechanism for the movement phase. selecting an owne
 its index and clicking an empty square moves the piece by updating the board array and advancing
 the turn. Clicking an occupied square automatically drops the selection to enforce the invalid 
 move requirement.
+
+Addded isAdjacent helper that converts 1d array indices into 2d grid coordinates to check if a 
+destination is exactly one square away. updated the second-click movement logic to clear the 
+selection if the player clicks an invalid non-adjacent square.

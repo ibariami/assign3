@@ -38,13 +38,13 @@ export default function Board() {
           setSelected(i);
         }
       } else {
-        //second click: if destination is occupied clear selection to revert the invalid move
-        if (squares[i]) {
+        //second click: if destination is occupied or not adjacent clear selection to revert the invalid move
+        if (squares[i] || !isAdjacent(selected, i)) {
           setSelected(null);
           return;
         }
         
-        //second click: if destination is empty move the piece
+        //second click: if destination is empty and adjacent move the piece
         const nextSquares = squares.slice();
         nextSquares[selected] = null; //clear old square
         nextSquares[i] = currentPlayer; //fill new square
@@ -96,6 +96,17 @@ export default function Board() {
       </div>
     </>
   );
+}
+
+//helper function to check if two square indices are adjacent
+function isAdjacent(a, b) {
+  const rowA = Math.floor(a / 3);
+  const colA = a % 3;
+  const rowB = Math.floor(b / 3);
+  const colB = b % 3;
+  
+  //adjacent squares have a row and column difference of 1 or less
+  return Math.abs(rowA - rowB) <= 1 && Math.abs(colA - colB) <= 1;
 }
 
 function calculateWinner(squares) {
