@@ -11,3 +11,6 @@ an 'X' appearing in the box. Also removed the 1-9 numbering so the grid starts e
 
 Square now takes on value from Board and the 3x3 display remain empty even when clicked.
 
+Updated the Square components to accept an onSquareClick prop, allowing the parent Board 
+component to centrally manage state updates via a handleClick function. Using arrow 
+functions to pass arguments to the event handler without triggering an infinite re-render loop.
