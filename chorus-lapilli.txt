@@ -16,3 +16,8 @@ Fulfill center square rule for the movement phase. Added check for if the curren
 the center tile. If so, simulates the intended move to ensure it either vacates the center or 
 results in an immediate win. if neither condition is met, the selection is cleared as an invalid
 move.
+
+Added 3 tests in test_chorus_lapilli.py. The first verifies that the board locks and prevents 
+further moves after a someone wins. The second asserts that pieces are restricted from moving to
+non-adjacent tiles. The third confirms that a player occupying the center tile cannot make a move
+that neither vacates the center nor results in an immediate win.
