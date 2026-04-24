@@ -1,8 +1,14 @@
 import { useState } from 'react';
 
-function Square({value, onSquareClick}) {
+//added isSelected prop to Square
+function Square({ value, onSquareClick, isSelected }) {
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button 
+      className="square" 
+      onClick={onSquareClick}
+      //apply yellow background if this square is selected
+      style={isSelected ? { backgroundColor: '#ffeb3b' } : null}
+    >
       {value}
     </button>
   );
@@ -11,17 +17,35 @@ function Square({value, onSquareClick}) {
 export default function Board() {
   const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
+  
+  //state to track which piece the user wants to move (index 0-8)
+  const [selected, setSelected] = useState(null);
 
   function handleClick(i) {
-    if (calculateWinner(squares) || squares[i]) {
+    if (calculateWinner(squares)) {
+      return;
+    }
+
+    //determine whose turn it is and count how many pieces they have on the board
+    const currentPlayer = xIsNext ? 'X' : 'O';
+    const pieceCount = squares.filter((s) => s === currentPlayer).length;
+
+    //phase detection: if player has 3 pieces they are in the movement phase
+    if (pieceCount >= 3) {
+      // need to implement movement**********************
+      if (squares[i] === currentPlayer) {
+        setSelected(i);
+      }
+      return; 
+    }
+
+    //og placement phase logic for first 3 moves per player
+    if (squares[i]) {
       return;
     }
     const nextSquares = squares.slice();
-    if (xIsNext) {
-      nextSquares[i] = 'X';
-    } else {
-      nextSquares[i] = 'O';
-    }
+    nextSquares[i] = currentPlayer;
+    
     setSquares(nextSquares);
     setXIsNext(!xIsNext);
   }
@@ -38,19 +62,20 @@ export default function Board() {
     <>
       <div className="status">{status}</div>
       <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+        {/* passed isSelected prop to every square comparing its index to selected */}
+        <Square value={squares[0]} onSquareClick={() => handleClick(0)} isSelected={selected === 0} />
+        <Square value={squares[1]} onSquareClick={() => handleClick(1)} isSelected={selected === 1} />
+        <Square value={squares[2]} onSquareClick={() => handleClick(2)} isSelected={selected === 2} />
       </div>
       <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
+        <Square value={squares[3]} onSquareClick={() => handleClick(3)} isSelected={selected === 3} />
+        <Square value={squares[4]} onSquareClick={() => handleClick(4)} isSelected={selected === 4} />
+        <Square value={squares[5]} onSquareClick={() => handleClick(5)} isSelected={selected === 5} />
       </div>
       <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+        <Square value={squares[6]} onSquareClick={() => handleClick(6)} isSelected={selected === 6} />
+        <Square value={squares[7]} onSquareClick={() => handleClick(7)} isSelected={selected === 7} />
+        <Square value={squares[8]} onSquareClick={() => handleClick(8)} isSelected={selected === 8} />
       </div>
     </>
   );

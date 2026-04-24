@@ -1,0 +1,5 @@
+Started transition from tic tac toe to chorus lapilli by implementing phase detection. Added 
+logic to count a player's pieces on the board. if they reach 3, the game enters movement phase 
+where they can click to select their piece. Updated the Square component to accept an isSelected
+prop to highlight the chosen piece in yellow.
+
