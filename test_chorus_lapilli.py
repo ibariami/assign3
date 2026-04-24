@@ -155,6 +155,56 @@ class TestChorusLapilli(unittest.TestCase):
         tiles[0].click()
         self.assertTileIs(tiles[0], self.SYMBOL_X)
 
+    def test_prevent_moves_after_win(self):
+        '''Check that the app prevents additional moves once a player wins.'''
+        tiles = self.driver.find_elements(By.XPATH, self.BOARD_TILE_XPATH)
+        
+        # X wins on the top row
+        moves = [0, 3, 1, 4, 2]
+        for move in moves:
+            tiles[move].click()
+            
+        # try placing O on tile 5 after X has already won
+        tiles[5].click()
+        
+        # verify tile 5 is still blank
+        self.assertTileIs(tiles[5], self.SYMBOL_BLANK)
+
+    def test_adjacency_rule_rejection(self):
+        '''Check that a piece cannot move to a non-adjacent square.'''
+        tiles = self.driver.find_elements(By.XPATH, self.BOARD_TILE_XPATH)
+        
+        # fast forward to movement phase (6 pieces on board)
+        moves = [0, 8, 1, 7, 3, 5]
+        for move in moves:
+            tiles[move].click()
+
+        # X's turn: X attempts to move piece at 0 to 6 (non adjacent)
+        tiles[0].click() # first click: select
+        tiles[6].click() # second click: destination
+
+        # verify piece did not move
+        self.assertTileIs(tiles[0], self.SYMBOL_X)
+        self.assertTileIs(tiles[6], self.SYMBOL_BLANK)
+
+    def test_center_square_rule_rejection(self):
+        '''Check that a player in the center must vacate it or win.'''
+        tiles = self.driver.find_elements(By.XPATH, self.BOARD_TILE_XPATH)
+        
+        # fast frward to movement phase. X occupies center (4)
+        moves = [4, 0, 1, 2, 6, 8]
+        for move in moves:
+            tiles[move].click()
+
+        # X is in center (4) and tries to move 1 to 5
+        # this destination is adjacent but does not vacate the center or win
+        tiles[1].click() # first click: select
+        tiles[5].click() # second click: destination
+
+        # werify piece did not move
+        self.assertTileIs(tiles[1], self.SYMBOL_X)
+        self.assertTileIs(tiles[5], self.SYMBOL_BLANK)
+
 
 # ================= [DO NOT MAKE ANY CHANGES BELOW THIS LINE] =================
 
